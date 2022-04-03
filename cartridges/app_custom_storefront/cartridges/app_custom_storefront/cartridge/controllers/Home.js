@@ -25,7 +25,7 @@ server.prepend('Show', cache.applyDefaultCache, function (req, res, next) {
     next();
 });
 
-server.append('Show', function (req, res, next) {
+server.append('Show', cache.applyCustomCache, function (req, res, next) {
     var viewData = res.getViewData();
     // declare param1 as a variable that equals 'General company details.'
     var appendParam = 'This is from append';
@@ -33,7 +33,8 @@ server.append('Show', function (req, res, next) {
 
     // Here grab whatever prepend added to viewData + the message here + the optional query string param
     res.setViewData({
-        param1: viewData.param1 + ' AND ' + appendParam + ' AND querystring param = ' + queryparam
+        param1: viewData.param1 + ' AND ' + appendParam + ' AND querystring param = ' + queryparam,
+        param2: res.cachePeriod + ' ' + res.cachePeriodUnit
     });
     next();
 });
