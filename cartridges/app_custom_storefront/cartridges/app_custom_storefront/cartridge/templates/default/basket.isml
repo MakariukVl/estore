@@ -1,0 +1,10 @@
+<isif condition="${!!pdict.numItems}">
+    <div>The current <b>basket</b>:<br/>
+        <isloop iterator="${pdict.items}" alias="item" status="loopstate">
+            <b>Count ${loopstate.count},  Index ${loopstate.index}.</b><span>
+            ${item.productName}: ${item.price.sales.formatted}</span><br/>
+        </isloop>
+    </div>
+<iselse>
+    <div>The current basket is empty</div>
+</isif>
