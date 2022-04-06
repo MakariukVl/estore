@@ -3,6 +3,9 @@
         <isloop iterator="${pdict.items}" alias="item" status="loopstate">
             <b>Count ${loopstate.count},  Index ${loopstate.index}.</b><span>
             ${item.productName}: ${item.price.sales.formatted}</span><br/>
+            <isloop iterator="${item.options}" alias="option">
+                &emsp;&emsp;| <b>Option:</b> ${option.displayName}<br/>
+            </isloop>
         </isloop>
     </div>
 <iselse>
