@@ -1,11 +1,17 @@
 <isdecorate template="common/layout/page.isml">
+    <isset name="Resource" value="${require('dw/web/Resource')}" scope="page" />
     <isif condition="${!!pdict.numItems}">
         <div class="container cart cart-page m-4">
             <div class="row">
                 <!---product cards--->
                 <div class="col-sm-7 col-md-8">
+                <h2>${Resource.msg('title.cart','cart',null)}</h2>
                     <isloop iterator="${pdict.items}" alias="lineItem">
-                        <isinclude template="cart/productCard/cartProductCard" />
+                        <div class="card">
+                            ${Resource.msg('product.name','cart',null)} <isinclude template="cart/productCard/cartProductCardHeader" /><hr/>
+                            ${Resource.msg('product.price','cart',null)} <isinclude template="cart/productCard/cartProductCardProductPrice" /><hr/>
+                            ${Resource.msg('product.availability','cart',null)} <isinclude template="cart/productCard/cartProductCardAvailability" />
+                        </div>
                     </isloop>
                 </div>
             </div>
