@@ -1,13 +1,16 @@
-<isif condition="${!!pdict.numItems}">
-    <div>The current <b>basket</b>:<br/>
-        <isloop iterator="${pdict.items}" alias="item" status="loopstate">
-            <b>Count ${loopstate.count},  Index ${loopstate.index}.</b><span>
-            ${item.productName}: ${item.price.sales.formatted}</span><br/>
-            <isloop iterator="${item.options}" alias="option">
-                &emsp;&emsp;| <b>Option:</b> ${option.displayName}<br/>
-            </isloop>
-        </isloop>
-    </div>
-<iselse>
-    <div>The current basket is empty</div>
-</isif>
+<isdecorate template="common/layout/page.isml">
+    <isif condition="${!!pdict.numItems}">
+        <div class="container cart cart-page m-4">
+            <div class="row">
+                <!---product cards--->
+                <div class="col-sm-7 col-md-8">
+                    <isloop iterator="${pdict.items}" alias="lineItem">
+                        <isinclude template="cart/productCard/cartProductCard" />
+                    </isloop>
+                </div>
+            </div>
+        </div>
+    <iselse>
+        <h4>The current basket is empty!</h4>
+    </isif>
+</isdecorate>
