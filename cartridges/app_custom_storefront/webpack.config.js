@@ -7,7 +7,7 @@ module.exports = [{
     name: 'js',
     entry: sgmfScripts.createJsPath(),
     output: {
-        path: path.resolve('./cartridges/app_custom_storefront/cartridge/static/default/js/'),
+        path: path.resolve('./cartridges/app_custom_storefront/cartridge/static'),
         filename: '[name].js'
     }
 }, {
