@@ -29,4 +29,16 @@
         regexp="^[\w.%+-]+@[\w.-]+\.[\w]{2,6}$"
         value-error="Default Error"
         type="string" />
+
+    <field
+        formid="emailconfirm"
+        label="label.input.emailconfirm.profile"
+        mandatory="true"
+        max-length="50"
+        missing-error="error.message.required"
+        parse-error="error.message.parse.email.profile.form"
+        range-error="error.message.50orless"
+        regexp="^[\w.%+-]+@[\w.-]+\.[\w]{2,6}$"
+        value-error="Default Error"
+        type="string" />
 </form>

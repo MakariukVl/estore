@@ -25,6 +25,10 @@ server.post('Handler', server.middleware.https, function (req, res, next) {
     var continueUrl = URLUtils.url('Newsletter-Show');
 
     // Perform any server-side validation before this point, and invalidate form accordingly
+    if (newsletterForm.email.value !== newsletterForm.emailconfirm.value) {
+        newsletterForm.valid = false;
+    }
+
     if (newsletterForm.valid) {
         // Send back a success status, and a redirect to another route
         res.render('/newsletter/newslettersuccess', {
@@ -33,12 +37,8 @@ server.post('Handler', server.middleware.https, function (req, res, next) {
         });
     } else {
         // Handle server-side validation errors here: this is just an example
-        var errorMsg = 'Some Error';
-        if (!newsletterForm.email.valid) {
-            errorMsg = Resource.msg('error.crossfieldvalidation', 'newsletter', null);
-        }
         res.render('/newsletter/newslettererror', {
-            errorMsg: errorMsg,
+            errorMsg: Resource.msg('error.crossfieldvalidation', 'newsletter', null),
             continueUrl: continueUrl
         });
     }
