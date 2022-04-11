@@ -37,6 +37,7 @@ server.post('Handler', server.middleware.https, function (req, res, next) {
         });
     } else {
         // Handle server-side validation errors here: this is just an example
+        res.setStatusCode(400);
         res.render('/newsletter/newslettererror', {
             errorMsg: Resource.msg('error.crossfieldvalidation', 'newsletter', null),
             continueUrl: continueUrl
