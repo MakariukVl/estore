@@ -1,10 +1,9 @@
 'use strict';
 
 var server = require('server');
+var URLUtils = require('dw/web/URLUtils');
 
 server.get('Show', server.middleware.https, function (req, res, next) {
-    var URLUtils = require('dw/web/URLUtils');
-
     var actionUrl = URLUtils.url('Newsletter-Handler');
     var newsletterForm = server.forms.getForm('newsletter');
     newsletterForm.clear();
@@ -18,31 +17,34 @@ server.get('Show', server.middleware.https, function (req, res, next) {
 });
 
 server.post('Handler', server.middleware.https, function (req, res, next) {
-    var URLUtils = require('dw/web/URLUtils');
-    var Resource = require('dw/web/Resource');
-
     var newsletterForm = server.forms.getForm('newsletter');
-    var continueUrl = URLUtils.url('Newsletter-Show');
 
-    // Perform any server-side validation before this point, and invalidate form accordingly
-    if (newsletterForm.email.value !== newsletterForm.emailconfirm.value) {
-        newsletterForm.valid = false;
-    }
+    // Check if email address confirmed successfully (matches)
+    newsletterForm.valid = newsletterForm.email.value === newsletterForm.emailconfirm.value;
 
     if (newsletterForm.valid) {
-        // Send back a success status, and a redirect to another route
-        res.render('/newsletter/newslettersuccess', {
-            continueUrl: continueUrl,
-            newsletterForm: newsletterForm
+        // Show the success page
+        res.json({
+            success: true,
+            redirectUrl: URLUtils.url('Newsletter-Success').toString()
         });
     } else {
         // Handle server-side validation errors here: this is just an example
-        res.setStatusCode(400);
-        res.render('/newsletter/newslettererror', {
-            errorMsg: Resource.msg('error.crossfieldvalidation', 'newsletter', null),
-            continueUrl: continueUrl
+        res.setStatusCode(500);
+        res.json({
+            error: true,
+            redirectUrl: URLUtils.url('Error-Start').toString()
         });
     }
+
+    next();
+});
+
+server.get('Success', server.middleware.https, function (req, res, next) {
+    res.render('newsletter/newslettersuccess', {
+        continueUrl: URLUtils.url('Newsletter-Show'),
+        newsletterForm: server.forms.getForm('newsletter')
+    });
 
     next();
 });
