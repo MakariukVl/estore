@@ -20,7 +20,9 @@ server.post('Handler', server.middleware.https, function (req, res, next) {
     var newsletterForm = server.forms.getForm('newsletter');
 
     // Check if email address confirmed successfully (matches)
-    newsletterForm.valid = newsletterForm.email.value === newsletterForm.emailconfirm.value;
+    newsletterForm.valid =
+        newsletterForm.valid &&
+        newsletterForm.email.value === newsletterForm.emailconfirm.value;
 
     if (newsletterForm.valid) {
         // Show the success page
