@@ -20,6 +20,7 @@ server.get('Show', server.middleware.https, csrfProtection.generateToken, functi
 
 server.post('Handler', server.middleware.https, csrfProtection.validateAjaxRequest, function (req, res, next) {
     var Transaction = require('dw/system/Transaction');
+    var Resource = require('dw/web/Resource');
     var newsletterForm = server.forms.getForm('newsletter');
 
     // Check if email address confirmed successfully (matches)
@@ -41,19 +42,33 @@ server.post('Handler', server.middleware.https, csrfProtection.validateAjaxReque
                 redirectUrl: URLUtils.url('Newsletter-Success').toString()
             });
         } catch (e) {
-            // var err = e;
-            res.setStatusCode(500);
-            res.json({
-                error: true,
-                redirectUrl: URLUtils.url('Error-Start').toString()
-            });
+            var err = e;
+            if (err.javaName === 'MetaDataException') {
+                /* Duplicate primary key on CO: send back message to client-side, but don't log error.
+                This is possible if the user tries to subscribe with the same email multiple times */
+                res.json({
+                    success: false,
+                    error: [Resource.msg('error.subscriptionexists', 'newsletter', null)]
+                });
+            } else {
+                /* Missing CO definition: Log error with message for site admin, set the response to error, 
+                and send error page URL to client-side */
+                var Logger = require('dw/system/Logger');
+                Logger.getLogger('newsletter_subscription')
+                    .error(Resource.msg('error.customobjectmissing', 'newsletter', null));
+                // Show general error page: there is nothing else to do
+                res.setStatusCode(500);
+                res.json({
+                    error: true,
+                    redirectUrl: URLUtils.url('Error-Start').toString()
+                });
+            }
         }
     } else {
         // Handle server-side validation errors here: this is just an example
-        res.setStatusCode(400);
         res.json({
-            error: true,
-            redirectUrl: URLUtils.url('Error-Start').toString()
+            success: false,
+            error: [Resource.msg('error.crossfieldvalidation', 'newsletter', null)]
         });
     }
 
