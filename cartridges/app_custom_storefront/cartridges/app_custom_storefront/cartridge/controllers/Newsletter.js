@@ -19,6 +19,7 @@ server.get('Show', server.middleware.https, csrfProtection.generateToken, functi
 });
 
 server.post('Handler', server.middleware.https, csrfProtection.validateAjaxRequest, function (req, res, next) {
+    var Transaction = require('dw/system/Transaction');
     var newsletterForm = server.forms.getForm('newsletter');
 
     // Check if email address confirmed successfully (matches)
@@ -29,16 +30,18 @@ server.post('Handler', server.middleware.https, csrfProtection.validateAjaxReque
     if (newsletterForm.valid) {
         try {
             var CustomObjectMgr = require('dw/object/CustomObjectMgr');
-            var co = CustomObjectMgr.createCustomObject('NewsletterSubscription', newsletterForm.email.value);
-            co.custom.firstName = newsletterForm.fname.value;
-            co.custom.lastName = newsletterForm.lname.value;
+            Transaction.wrap(function () {
+                var co = CustomObjectMgr.createCustomObject('NewsletterSubscription', newsletterForm.email.value);
+                co.custom.firstName = newsletterForm.fname.value;
+                co.custom.lastName = newsletterForm.lname.value;
+            });
             // Show the success page
             res.json({
                 success: true,
                 redirectUrl: URLUtils.url('Newsletter-Success').toString()
             });
         } catch (e) {
-            var err = e;
+            // var err = e;
             res.setStatusCode(500);
             res.json({
                 error: true,
