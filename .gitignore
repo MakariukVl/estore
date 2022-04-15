@@ -1,5 +1,7 @@
 node_modules/
-cartridges/**/cartridge/static/*
+cartridges/**/cartridge/static/*/css/
+cartridges/**/cartridge/static/*/js/
+cartridges/**/cartridge/static/*/fonts/
 
 coverage/
 npm-debug.log

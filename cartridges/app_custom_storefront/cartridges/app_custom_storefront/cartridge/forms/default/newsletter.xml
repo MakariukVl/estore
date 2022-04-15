@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<form xmlns="http://www.demandware.com/xml/form/2008-04-19" secure="false">
+    <field
+        formid="fname"
+        label="label.input.firstname.profile"
+        mandatory="true"
+        max-length="50"
+        missing-error="error.message.required"
+        range-error="error.message.50orless"
+        type="string" />
+
+    <field
+        formid="lname"
+        label="label.input.lastname.profile"
+        mandatory="true"
+        max-length="50"
+        missing-error="error.message.required"
+        range-error="error.message.50orless"
+        type="string" />
+
+    <field
+        formid="email"
+        label="label.input.email.profile"
+        mandatory="true"
+        max-length="50"
+        missing-error="error.message.required"
+        parse-error="error.message.parse.email.profile.form"
+        range-error="error.message.50orless"
+        regexp="^[\w.%+-]+@[\w.-]+\.[\w]{2,6}$"
+        value-error="Default Error"
+        type="string" />
+
+    <field
+        formid="emailconfirm"
+        label="label.input.emailconfirm.profile"
+        mandatory="true"
+        max-length="50"
+        missing-error="error.message.required"
+        parse-error="error.message.parse.email.profile.form"
+        range-error="error.message.50orless"
+        regexp="^[\w.%+-]+@[\w.-]+\.[\w]{2,6}$"
+        value-error="Default Error"
+        type="string" />
+</form>
