@@ -33,6 +33,7 @@ module.exports = function (object, quantity, minOrderQuantity, availabilityModel
 
     Object.defineProperty(object, 'ats', {
         enumerable: true,
+        writable: true,
         value: getAtsMessage(availabilityModel)
     });
 };
