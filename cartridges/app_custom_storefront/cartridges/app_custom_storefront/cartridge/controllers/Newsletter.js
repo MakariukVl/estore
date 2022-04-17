@@ -33,11 +33,14 @@ server.post('Handler', server.middleware.https, csrfProtection.validateAjaxReque
             try {
                 var Transaction = require('dw/system/Transaction');
                 var CustomObjectMgr = require('dw/object/CustomObjectMgr');
+                var HookMgr = require('dw/system/HookMgr');
 
                 Transaction.wrap(function () {
                     var co = CustomObjectMgr.createCustomObject('NewsletterSubscription', newsletterForm.email.value);
                     co.custom.firstName = newsletterForm.fname.value;
                     co.custom.lastName = newsletterForm.lname.value;
+                    // Use a hook to send a confirmation email
+                    HookMgr.callHook('newsletter.email', 'send', newsletterForm.email.value);
                 });
                 // Show the success page
                 res.json({
