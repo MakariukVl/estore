@@ -11,11 +11,21 @@ var Transaction = require('dw/system/Transaction');
  */
 module.exports = {
     deleteCOs: function deleteCOs(parameters) {
+        var iterator;
+        var result = false;
 
-        var iterator = require('dw/util/Iterator');
+        try {
+            // Search COs by type only, no query string, no sorting
+            iterator = CustomObjectMgr.queryCustomObjects(parameters.CustomObjectType, '', null);
+            result = true;
+        } catch (error) {
+            var Logger = require('dw/system/Logger');
+            Logger.error('Delete Custom Object Fail: ' + error.toString());
+        }
 
-        // Search COs by type only, no query string, no sorting
-        iterator = CustomObjectMgr.queryCustomObjects(parameters.CustomObjectType, '', null);
+        if (!result) {
+            return;
+        }
 
         while (iterator.hasNext()) {
             var customObject = iterator.next();
@@ -24,5 +34,7 @@ module.exports = {
                 CustomObjectMgr.remove(customObject);
             });
         }
+
+        iterator.close();
     }
 };
