@@ -1,0 +1,12 @@
+<label class="wishlist-heart float-right${pdict.wishlist.isInWishlist ? '' : ' d-none'}"
+    data-action-url="${URLUtils.url('Wishlist-RemoveProduct')}"
+    data-action-type="get"
+    title="${Resource.msg('wishlist.remove.hint', 'wishlist', null)}">
+    <isinclude template="product/components/svg/redHeart" />
+</label>
+<label class="wishlist-heart float-right${pdict.wishlist.isInWishlist ? ' d-none' : ''}"
+    data-action-url="${URLUtils.url('Wishlist-AddProduct')}"
+    data-action-type="post"
+    title="${Resource.msg('wishlist.add.hint', 'wishlist', null)}">
+    <isinclude template="product/components/svg/outlineHeart" />
+</label>
