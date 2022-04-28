@@ -23,7 +23,7 @@
                 <!-- Product Name (Mobile) & Wishlist -->
                 <div class="row">
                     <div class="d-md-none col-sm-12 clearfix">
-                        <span><isinclude url="${URLUtils.url('Wishlist-Show', 'pid', product.id)}" /></span>
+                        <span><isinclude url="${URLUtils.url('Wishlist-Icon', 'pid', product.id)}" /></span>
                         <h1 class="product-name">${product.productName}</h1>
                     </div>
                 </div>
@@ -45,7 +45,7 @@
                 <!-- Product Name & Wishlist -->
                 <div class="row">
                     <div class="col clearfix">
-                        <span class="hidden-sm-down"><isinclude url="${URLUtils.url('Wishlist-Show', 'pid', product.id)}" /></span>
+                        <span class="hidden-sm-down"><isinclude url="${URLUtils.url('Wishlist-Icon', 'pid', product.id)}" /></span>
                         <h1 class="product-name hidden-sm-down">${product.productName}</h1>
                     </div>
                 </div>
@@ -142,8 +142,7 @@
                 context-object="${pdict.product.raw}" />
         </div>
 
-        <isset name="loopState" value="${{
-                                       count: 1}}" scope="page" />
+        <isset name="loopState" value="${{count: 1}}" scope="page" />
         <isinclude template="product/components/descriptionAndDetails" />
 
         <div class="recommendations">

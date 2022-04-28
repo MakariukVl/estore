@@ -11,7 +11,32 @@ var Resource = require('dw/web/Resource');
 // var ProductMgr = require('dw/catalog/ProductMgr');
 var TYPE_WISH_LIST = 10;
 
+server.get('Show', function (req, res, next) {
+    var collections = require('*/cartridge/scripts/util/collections');
+    var ProductListItemModel = require('*/cartridge/models/productListItem');
+
+    // eslint-disable-next-line no-undef
+    var customerWishList = productListHelper.getCurrentOrNewList(customer, {
+        type: TYPE_WISH_LIST
+    });
+
+    var apiProductItems = customerWishList.getProductItems();
+
+    var productItems = collections.map(apiProductItems, function (apiProductItem) {
+        return new ProductListItemModel(apiProductItem).productListItem;
+    });
+
+    res.render('wishlist', {
+        productItems: productItems
+    });
+
+    next();
+});
+
 server.post('AddProduct', function (req, res, next) {
+    // The req parameter has a property called form. In this use case
+    // the form could have the following:
+    // ! pid - the Product ID
     var message;
     var statusCode = 200;
     var success;
@@ -55,6 +80,9 @@ server.post('AddProduct', function (req, res, next) {
 });
 
 server.get('RemoveProduct', function (req, res, next) {
+    // The req parameter has a property called querystring. In this use case
+    // the querystring could have the following:
+    // ! pid - the Product ID
     var pid = req.querystring.pid;
 
     if (pid) {
@@ -85,8 +113,10 @@ server.get('RemoveProduct', function (req, res, next) {
     next();
 });
 
-server.get('Show', function (req, res, next) {
-    // ! Required query string param 'pid'
+server.get('Icon', function (req, res, next) {
+    // The req parameter has a property called querystring. In this use case
+    // the querystring could have the following:
+    // ! pid - the Product ID
     var pid = req.querystring.pid;
     var isInListObj;
     var isInList = false;
@@ -102,6 +132,7 @@ server.get('Show', function (req, res, next) {
     if (!pid) {
         res.setStatusCode(400);
     }
+
     res.render('product/components/wishlistHeart', {
         wishlist: {
             isInWishlist: isInList
