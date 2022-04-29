@@ -113,6 +113,39 @@ server.get('RemoveProduct', function (req, res, next) {
     next();
 });
 
+server.get('RemoveAll', function (req, res, next) {
+    var Transaction = require('dw/system/Transaction');
+    var collections = require('*/cartridge/scripts/util/collections');
+
+    // eslint-disable-next-line no-undef
+    var apiProductList = productListHelper.getCurrentOrNewList(customer, {
+        type: TYPE_WISH_LIST
+    });
+
+    var productItemsCollection = apiProductList.getProductItems();
+
+    Transaction.wrap(function () {
+        collections.forEach(productItemsCollection, function (item) {
+            apiProductList.removeItem(item);
+        });
+    });
+
+    var message = Resource.msg('wishlist.remove.empty', 'wishlist', null); // success
+    var empty = apiProductList.getProductItems().empty;   // recheck new productItems
+
+    if (!empty) {
+        message = Resource.msg('wishlist.remove.not.empty', 'wishlist', null);
+        res.setStatusCode(500);
+    }
+
+    res.json({
+        success: empty,
+        message: message
+    });
+
+    next();
+});
+
 server.get('Icon', function (req, res, next) {
     // The req parameter has a property called querystring. In this use case
     // the querystring could have the following:

@@ -12,6 +12,10 @@
                 </div>
             </isloop>
         </div>
+        <div class="remove-all-wrapper text-center mb-2">
+            <a class="h3 text-primary remove-all" href="${URLUtils.url('Wishlist-RemoveAll')}"><!--
+            -->${Resource.msg('link.remove.all.text', 'wishlist', null)}</a>
+        </div>
     <iselse/>
         <h1>${Resource.msg('wishlist.remove.empty', 'wishlist', null)}</h1>
     </isif>
