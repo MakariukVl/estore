@@ -1,0 +1,34 @@
+<div class="image-container">
+    <a href="${pdict.urls.product}">
+        <img class="tile-image"
+             src="${product.images.medium[0].url}"
+             alt="${product.productName}"
+             title="${product.images.medium[0].title}"
+             />
+    </a>
+    <isif condition="${pdict.display.showQuickView !== false}">
+        <a class="quickview hidden-sm-down" href="${pdict.urls.quickView}"
+           data-toggle="modal"
+           data-target="#quickViewModal"
+           title="${Resource.msgf('button.quickview', 'common', null, product.productName)}"
+           aria-label="${Resource.msgf('button.quickview', 'common', null, product.productName)}"
+        >
+            <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-inverse fa-stack-2x"></i>
+                <i class="fa fa-expand fa-stack-1x"></i>
+            </span>
+        </a>
+    </isif>
+    <isif condition="${pdict.display.isWishlistTile === true}">
+        <a class="product-remove quickview hidden-xs-down"
+           href="${URLUtils.url('Wishlist-RemoveProduct', 'pid', product.id)}"
+           title="${Resource.msgf('button.remove.hint', 'wishlist', null)}"
+           aria-label="${Resource.msgf('button.remove.hint', 'wishlist', null)}"
+        >
+            <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-inverse fa-stack-2x"></i>
+                <i class="fa fa-times fa-stack-1x"></i>
+            </span>
+        </a>
+    </isif>
+</div>

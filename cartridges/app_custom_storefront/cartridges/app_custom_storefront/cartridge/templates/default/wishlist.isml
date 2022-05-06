@@ -1,0 +1,22 @@
+<isscript>
+    var assets = require('*/cartridge/scripts/assets');
+    assets.addJs('/js/wishlistPLP.js');
+</isscript>
+
+<isdecorate template="common/layout/page">
+    <isif condition="${pdict.productItems.length > 0}">
+        <div class="row product-grid">
+            <isloop items="${pdict.productItems}" var="product">
+                <div class="col-6 col-sm-4">
+                    <isinclude url="${URLUtils.url('Tile-Show', 'pid', product.pid, 'swatches', true, 'ratings', true, 'isWishlistTile', true, 'showQuickView', false)}" />
+                </div>
+            </isloop>
+        </div>
+        <div class="remove-all-wrapper text-center mb-2">
+            <a class="h3 text-primary remove-all" href="${URLUtils.url('Wishlist-RemoveAll')}"><!--
+            -->${Resource.msg('link.remove.all.text', 'wishlist', null)}</a>
+        </div>
+    <iselse/>
+        <h1>${Resource.msg('wishlist.remove.empty', 'wishlist', null)}</h1>
+    </isif>
+</isdecorate>
