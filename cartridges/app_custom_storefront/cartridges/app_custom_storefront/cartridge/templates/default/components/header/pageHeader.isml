@@ -15,6 +15,15 @@
             </div>
         </div>
     </div>
+
+    <iscomment> !This is Slot. Look in BM by ID 'header-banner-2' </iscomment>
+    <div class="content">
+        <isslot id="header-banner-2" description="Slot above the site header" context="global" />
+    </div>
+    <iscomment> !This is Asset. Look in BM by ID '2-day-shipping-popup' </iscomment>
+    <iscomment> <isinclude url="${URLUtils.url('Page-Include', 'cid', '2-day-shipping-popup')}" sf-toolkit="on" /> </iscomment>
+
+
     <nav role="navigation">
         <div class="header container">
             <div class="row">

@@ -25,6 +25,11 @@
         </div>
     </div>
 
+    <iscomment> !Assets attached by remote include </iscomment>
+    <div class="content">
+        <isinclude url="${URLUtils.url('Page-Include', 'cid', 'brand-x-super-shoo')}" sf-toolkit="on" />
+    </div>
+
     <div class="homepage shop-the-style">
         <isslot id="home-product-set-m" description="Link to a Product Set." context="global" />
     </div>
