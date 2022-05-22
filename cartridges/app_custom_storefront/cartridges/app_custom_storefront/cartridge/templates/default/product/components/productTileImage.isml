@@ -1,4 +1,9 @@
 <div class="image-container">
+    <isif condition="${pdict.display.isWishlistTile !== true}">
+        <div class="position-absolute">
+            <isinclude url="${URLUtils.url('Wishlist-Icon', 'pid', product.id)}" />
+        </div>
+    </isif>
     <a href="${pdict.urls.product}">
         <img class="tile-image"
              src="${product.images.medium[0].url}"

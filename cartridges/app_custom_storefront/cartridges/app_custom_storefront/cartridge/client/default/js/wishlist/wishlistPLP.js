@@ -67,5 +67,52 @@ module.exports = {
                 });
             }
         });
+    },
+    setHeartToggleHandlers: function () {
+        $('.product').on('wishlist:toggle', function () {
+            $(this).find('.wishlist-heart').toggleClass('d-none');
+        });
+    },
+    toggleHearts: function () {
+        $('.wishlist-heart').on('click', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            var dataActionUrl = $(this).data('action-url');
+            var dataActionType = $(this).data('action-type');
+            var $product = $(this);
+            var limit = 10;
+            var i = 0;
+            var pid;
+
+            do {
+                $product = $product.parent();
+                pid = $product.data('pid');
+            }
+            while (!pid && i++ < limit);
+
+            var form = {
+                pid: pid
+            };
+
+            if (dataActionUrl) {
+                // request action url
+                $.ajax({
+                    url: dataActionUrl,
+                    type: dataActionType,
+                    dataType: 'json',
+                    data: form,
+                    success: function (data) {
+                        if (data.success) {
+                            $product.trigger('wishlist:toggle');
+                        }
+                    },
+                    error: function (err) {
+                        if (err.responseJSON.error) {
+                           console.error(err.responseJSON.error);
+                        }
+                    }
+                });
+            }
+        });
     }
 };
