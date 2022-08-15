@@ -43,6 +43,102 @@
               }
           ]
         }
+      },
+      {
+        "@type-id":"custom.CreateCustomFileInIPMEX",
+        "@supports-parallel-execution":"false",
+        "@supports-site-context":"false",
+        "@supports-organization-context":"true",
+        "description":"This script creates file with some text inside in IMPEX/task_1/process folder. The result of this job step is unique file. It runs in organization scope.",
+        "module":"app_custom_storefront/cartridge/scripts/steps/exportTextToFile.js",
+        "function":"processFile",
+        "timeout-in-seconds":"300",
+        "parameters":
+        {
+          "parameter":
+          [
+            {
+              "@name":"fileName",
+              "@type":"string",
+              "@required":"true",
+              "description":"The prefix for name of file created in IMPEX/task_1/process folder."
+            }
+          ]
+        },
+        "status-codes":
+        {
+          "status":
+          [
+              {
+                "@code": "ERROR",
+                "description": "Used when the step failed with an error."
+              },
+              {
+                "@code": "FINISHED",
+                "description": "Used when the step finished successfully."
+              },
+              {
+                "@code": "FINISHED_WITH_WARNINGS",
+                "description": "Used when the step finished with warnings."
+              }
+          ]
+        }
+      },
+      {
+        "@type-id":"custom.RemoveCustomFilesInIPMEX",
+        "@supports-parallel-execution":"false",
+        "@supports-site-context":"false",
+        "@supports-organization-context":"true",
+        "description":"This script removes IMPEX/task_1 folder with all files and dirs inside. It runs in organization scope.",
+        "module":"app_custom_storefront/cartridge/scripts/steps/exportTextToFile.js",
+        "function":"removeAllFiles",
+        "timeout-in-seconds":"400",
+        "status-codes":
+        {
+          "status":
+          [
+              {
+                "@code": "ERROR",
+                "description": "Used when the step failed with an error."
+              },
+              {
+                "@code": "FINISHED",
+                "description": "Used when the step finished successfully."
+              },
+              {
+                "@code": "FINISHED_WITH_WARNINGS",
+                "description": "Used when the step finished with warnings."
+              }
+          ]
+        }
+      },
+      {
+        "@type-id":"custom.ExportCustomFiles",
+        "@supports-parallel-execution":"false",
+        "@supports-site-context":"false",
+        "@supports-organization-context":"true",
+        "description":"This script copy files from IMPEX/task_1/process to IMPEX/task_1/store and remove source files. It runs in organization scope.",
+        "module":"app_custom_storefront/cartridge/scripts/steps/exportTextToFile.js",
+        "function":"exportAllFiles",
+        "timeout-in-seconds":"300",
+        "status-codes":
+        {
+          "status":
+          [
+              {
+                "@code": "ERROR",
+                "description": "Used when the step failed with an error."
+              },
+              {
+                "@code": "FINISHED",
+                "description": "Used when the step finished successfully."
+              },
+              {
+                "@code": "FINISHED_WITH_WARNINGS",
+                "description": "Used when the step finished with warnings."
+              }
+          ]
+        }
       }
     ]
   }
